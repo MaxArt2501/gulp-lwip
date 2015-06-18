@@ -1,5 +1,5 @@
-gulp-json-fmt
-=============
+gulp-lwip
+=========
 
 [Gulp.js](http://gulpjs.com/) plugin wrapping [lwip](https://github.com/EyalAr/lwip) image manipulation library.
 
