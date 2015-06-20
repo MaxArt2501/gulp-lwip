@@ -12,6 +12,10 @@ var lwip = require("lwip"),
     PluginError = require("gulp-util").PluginError,
     through = require("through2");
 
+function isValidType(type) {
+    return ~[ "jpg", "png", "gif" ].indexOf(type);
+}
+
 function lwipTask(actions, format, params) {
     var thru = through.obj(function(file, encoding, done) {
         if (file.isNull() || !actions.length && !format && !params) {
@@ -24,6 +28,12 @@ function lwipTask(actions, format, params) {
             try {
                 // Buffer mode
                 var type = fileType(file.contents);
+                if (!type || !isValidType(type.ext)) {
+                    // Ignore unsupported files
+                    this.push(file), done();
+                    return;
+                }
+                    
                 
                 if (!actions.length && type.ext === format && !params) {
                     // No actions, and the file format is the same of the original
@@ -60,8 +70,6 @@ function lwipTask(actions, format, params) {
                     
                     executeActions(0);
                 });
-                // file.contents = new Buffer(fmt.end(file.contents).flush(), encoding);
-                // done(null, file);
             } catch (e) {
                 done(new PluginError("gulp-lwip", e));
             }
@@ -75,7 +83,7 @@ function lwipTask(actions, format, params) {
         if (type != null) {
             type = String(type).toLowerCase();
 
-            if (~[ "jpg", "png", "gif" ].indexOf(type))
+            if (isValidType(type))
                 format = type;
             else throw new PluginError("gulp-lwip", "Invalid image format")
         }

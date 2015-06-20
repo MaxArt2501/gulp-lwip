@@ -30,9 +30,13 @@ gulp.src("./src/images/*.jpg")
     .pipe(gulp.dest("./assets/img/"));
 ```
 
-`gulp-lwip`'s usage is similar to `lwip`'s in [batch mode](https://github.com/EyalAr/lwip#usage), chaining the desired filters one after the other, together with their parameters. Basically every processing filter can be used like that (`resize`, `blur`, `saturate` and so on). Check `lwip`'s documentation to further informations.
+`gulp-lwip`'s usage is similar to `lwip`'s in [batch mode](https://github.com/EyalAr/lwip#usage), chaining the desired filters one after the other, together with their parameters. Basically every processing filter can be used like that (`resize`, `blur`, `saturate` and so on). `paste` is unsupported at the moment. Check `lwip`'s documentation to further informations.
 
 Getters like `width` or `getPixel` are, of course, not supported, while `writeFile` and `toBuffer` are replaced by `exportAs(format, parameters)`. `format` can be one of the formats accepted by lwip (i.e., `"jpg"`, `"png"` or `"gif"`), or `null`, meaning that the original format is used; the optional argument `parameters` is a plain object meant to provide specific parameters when outputting the image file. `exportAs` might *not* be the last method in the call chain.
+
+## Tests
+
+Tests are performed using [mocha](http://mochajs.org/). Execute `npm run test` after installing the development dependencies, or just `mocha` if you have a compatible version installed globally.
 
 ## License
 

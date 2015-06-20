@@ -4,7 +4,7 @@
   "description": "Gulp plugin for image manipulation with lwip",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "node_modules/.bin/mocha"
   },
   "repository": {
     "type": "git",
@@ -16,7 +16,10 @@
     "image",
     "manipulation"
   ],
-  "author": "MaxArt2501",
+  "author": {
+    "name": "Massimo Artizzu",
+    "email": "maxart.x@gmail.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/MaxArt2501/gulp-lwip/issues"
@@ -27,5 +30,10 @@
     "gulp-util": "^3.0.5",
     "lwip": "0.0.7",
     "through2": "^2.0.0"
+  },
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^2.2.5",
+    "vinyl": "^0.5.0"
   }
 }
