@@ -67,7 +67,7 @@ function lwipTask(actions, format, params) {
                             });
                         }
                     }
-                    
+
                     executeActions(0);
                 });
             } catch (e) {
@@ -89,6 +89,8 @@ function lwipTask(actions, format, params) {
         }
         if (par && typeof par === "object")
             params = par;
+
+        return this;
     };
 
     var methods = [

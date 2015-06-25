@@ -1,6 +1,6 @@
 {
   "name": "gulp-lwip",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Gulp plugin for image manipulation with lwip",
   "main": "index.js",
   "scripts": {
