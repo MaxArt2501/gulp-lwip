@@ -16,6 +16,45 @@ function isValidType(type) {
     return ~[ "jpg", "png", "gif" ].indexOf(type);
 }
 
+var extensions = {
+    rescale: function(width, height/*, inter, callback*/) {
+        var alen = arguments.length - 1,
+            args = [ arguments[alen] ];
+
+        if (typeof arguments[alen - 1] === "string")
+            // Should be the interpolation option
+            args.unshift(arguments[--alen]);
+
+        if (alen < 2 || height == null)
+            height = width * this.height() / this.width();
+        else if (width == null)
+            width = height * this.width() / this.height();
+
+        this.resize.apply(this, [ width, height ].concat(args));
+    },
+    putImage: function(left, top, image, callback) {
+        var that = this;
+
+        function cb(err, layer) {
+            if (err)
+                return done(new PluginError("gulp-lwip", "Error opening the layer image: " + err.message));
+
+            that.paste(left, top, layer, callback);
+        }
+
+        if (Buffer.isBuffer(image)) {
+            var type = fileType(image);
+            lwip.open(image, type && type.ext, cb);
+        } else lwip.open(image, cb);
+    }
+};
+
+var methods = [
+    "resize", "scale", "contain", "cover", "rotate", "crop",
+    "blur", "sharpen", "mirror", "flip", "border", "pad",
+    "saturate", "lighten", "darken", "hue", "fade", "opacity", "setPixel"
+].concat(Object.keys(extensions));
+
 function lwipTask(actions, format, params) {
     var thru = through.obj(function(file, encoding, done) {
         if (file.isNull() || !actions.length && !format && !params) {
@@ -45,7 +84,11 @@ function lwipTask(actions, format, params) {
                     if (err)
                         return done(new PluginError("gulp-lwip", "Error opening the image: " + err.message));
 
+                    for (var ext in extensions)
+                        image[ext] = extensions[ext];
+
                     function executeActions(i) {
+                        var now = Date.now();
                         if (i < actions.length) {
                             var action = actions[i][0],
                                 args = actions[i].slice(1).concat(function(err, img) {
@@ -66,8 +109,8 @@ function lwipTask(actions, format, params) {
                                 done(null, file);
                             });
                         }
-                    }
 
+                    }
                     executeActions(0);
                 });
             } catch (e) {
@@ -93,12 +136,6 @@ function lwipTask(actions, format, params) {
         return this;
     };
 
-    var methods = [
-        "resize", "scale", "contain", "cover", "rotate", "crop",
-        "blur", "sharpen", "mirror", "flip", "border", "pad",
-        "saturate", "lighten", "darken", "hue", "fade", "opacity", "setPixel"
-    ];
-    
     methods.forEach(function(method) {
         thru[method] = function() {
             var action = [ method ].concat([].slice.call(arguments));

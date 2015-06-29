@@ -30,9 +30,19 @@ gulp.src("./src/images/*.jpg")
     .pipe(gulp.dest("./assets/img/"));
 ```
 
-`gulp-lwip`'s usage is similar to `lwip`'s in [batch mode](https://github.com/EyalAr/lwip#usage), chaining the desired filters one after the other, together with their parameters. Basically every processing filter can be used like that (`resize`, `blur`, `saturate` and so on). `paste` is unsupported at the moment. Check `lwip`'s documentation to further informations.
+`gulp-lwip`'s usage is similar to `lwip`'s in [batch mode](https://github.com/EyalAr/lwip#usage), chaining the desired filters one after the other, together with their parameters. Basically every processing filter can be used like that (`resize`, `blur`, `saturate` and so on). `paste` is replaced by `putImage` (read later). Check `lwip`'s documentation to further informations.
 
 Getters like `width` or `getPixel` are, of course, not supported, while `writeFile` and `toBuffer` are replaced by `exportAs(format, parameters)`. `format` can be one of the formats accepted by lwip (i.e., `"jpg"`, `"png"` or `"gif"`), or `null`, meaning that the original format is used; the optional argument `parameters` is a plain object meant to provide specific parameters when outputting the image file. `exportAs` might *not* be the last method in the call chain.
+
+### Additional methods
+
+* `rescale(width[, height][, inter])`
+
+  `rescale`, when given both `width` and `height`, works exactly like `resize`. When `height` is omitted, though, the picture is scaled to the given `width` keeping the image's aspect ratio, whereas `resize` would produce square images. Similarly, when `width == null` and `height` is a number, the picture is resized to the given `height` with the same aspect ratio.
+
+* `putImage(left, top, image)`
+
+  This method takes the role of `paste`. `image` can be either a `Buffer` object containing encoded image data, or a path pointing to an image file. The format is inferred from the content.
 
 ## Tests
 

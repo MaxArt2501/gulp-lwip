@@ -73,4 +73,61 @@ describe("gulp-lwip", function() {
                 .write(new File({ contents: buffer }));
         });
     });
+
+    it("should rescale keeping the aspect ratio", function(done) {
+        plugin
+            .resize(800, 400)
+            .rescale(400)
+            .on("data", function(output) {
+                lwip.open(output.contents, "jpg", function(err, img) {
+                    if (err) return done(err);
+
+                    expect(img.height()).to.be(200);
+                    done();
+                });
+            })
+            .on("error", done)
+            .write(new File({ contents: pillars }));
+    });
+
+    it("should paste images from buffer", function(done) {
+        plugin
+            .putImage(2, 1, blackDot)
+            .on("data", function(output) {
+                lwip.open(output.contents, "png", function(err, img) {
+                    if (err) return done(err);
+
+                    var black = img.getPixel(2, 1);
+                    expect(black.g).to.be.below(10);
+                    expect(black.b).to.be.below(10);
+                    expect(black.r).to.be.below(10);
+
+                    var red = img.getPixel(2, 2);
+                    expect(red).to.eql({ r: 255, g: 0, b: 0, a: 100 });
+                    done();
+                });
+            })
+            .on("error", done)
+            .write(new File({ contents: redSquare }));
+    });
+
+    it("should paste images from a file path", function(done) {
+        plugin
+            .resize(400, 400)
+            .putImage(50, 50, __dirname + "/pillars-of-creation.jpg")
+            .on("data", function(output) {
+                lwip.open(output.contents, "png", function(err, img) {
+                    if (err) return done(err);
+
+                    var px = img.getPixel(50, 50);
+                    expect(px).to.not.eql({ r: 255, g: 0, b: 0, a: 100 });
+
+                    var red = img.getPixel(49, 49);
+                    expect(red).to.eql({ r: 255, g: 0, b: 0, a: 100 });
+                    done();
+                });
+            })
+            .on("error", done)
+            .write(new File({ contents: redSquare }));
+    });
 });
