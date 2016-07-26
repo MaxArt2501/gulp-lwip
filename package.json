@@ -26,14 +26,14 @@
   },
   "homepage": "https://github.com/MaxArt2501/gulp-lwip#readme",
   "dependencies": {
-    "file-type": "^2.7.0",
+    "file-type": "^3.8.0",
     "gulp-util": "^3.0.5",
-    "lwip": "0.0.8",
+    "lwip": "0.0.9",
     "through2": "^2.0.0"
   },
   "devDependencies": {
     "expect.js": "^0.3.1",
     "mocha": "^2.2.5",
-    "vinyl": "^0.5.0"
+    "vinyl": "^1.1.1"
   }
 }
