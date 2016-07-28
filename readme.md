@@ -1,6 +1,9 @@
 gulp-lwip
 =========
 
+[![Version](http://img.shields.io/npm/v/gulp-lwip.svg)](https://www.npmjs.org/package/gulp-lwip)
+[![Build Status](https://travis-ci.org/MaxArt2501/gulp-lwip.svg?branch=master)](https://travis-ci.org/MaxArt2501/gulp-lwip)
+
 [Gulp.js](http://gulpjs.com/) plugin wrapping [lwip](https://github.com/EyalAr/lwip) image manipulation library.
 
 ## Installation
