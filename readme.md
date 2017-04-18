@@ -1,6 +1,9 @@
 gulp-lwip
 =========
 
+[![Version](http://img.shields.io/npm/v/gulp-lwip.svg)](https://www.npmjs.org/package/gulp-lwip)
+[![Build Status](https://travis-ci.org/MaxArt2501/gulp-lwip.svg?branch=master)](https://travis-ci.org/MaxArt2501/gulp-lwip)
+
 [Gulp.js](http://gulpjs.com/) plugin wrapping [lwip](https://github.com/EyalAr/lwip) image manipulation library.
 
 ## Installation
@@ -13,7 +16,7 @@ npm install --save-dev gulp-lwip
 
 ## Notes
 
-The strong point of `lwip` is that it allows to manipulate images without external dependencies like ImageMagick or similar. However, this doesn't mean you won't need anything else: during the installation, source files will be compiled using [`node-gyp`](https://github.com/TooTallNate/node-gyp), which means Python and a C++ compiler will be used. In particular, Windows installations will need Visual Studio 2013 at least.
+The strong point of `lwip` is that it allows to manipulate images without external dependencies like ImageMagick or similar. However, this doesn't mean you won't need anything else: during the installation, source files will be compiled using [`node-gyp`](https://github.com/TooTallNate/node-gyp), which means Python and a C++ compiler will be used. In particular, Windows installations will need Visual Studio 2013 at least, or [Visual C++ 2015 Build Tools](http://landinghub.visualstudio.com/visual-cpp-build-tools) if you don't want a full VS installation (don't forget to do `npm config set msvs_version 2015 --global` and have node-gyp 3.4.0 at least).
 
 See `node-gyp`'s page for more informations.
 
