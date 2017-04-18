@@ -28,7 +28,7 @@
   "dependencies": {
     "file-type": "^3.8.0",
     "gulp-util": "^3.0.5",
-    "lwip": "0.0.9",
+    "pajk-lwip": "0.2.0",
     "through2": "^2.0.0"
   },
   "devDependencies": {

@@ -7,7 +7,7 @@
  */
 "use strict";
 
-var lwip = require("lwip"),
+var lwip = require("pajk-lwip"),
     fileType = require("file-type"),
     PluginError = require("gulp-util").PluginError,
     through = require("through2");
@@ -72,14 +72,14 @@ function lwipTask(actions, format, params) {
                     this.push(file), done();
                     return;
                 }
-                    
-                
+
+
                 if (!actions.length && type.ext === format && !params) {
                     // No actions, and the file format is the same of the original
                     this.push(file), done();
                     return;
                 }
-                
+
                 lwip.open(file.contents, type.ext, function(err, image) {
                     if (err)
                         return done(new PluginError("gulp-lwip", "Error opening the image: " + err.message));
